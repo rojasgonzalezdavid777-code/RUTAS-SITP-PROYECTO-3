@@ -1,0 +1,20 @@
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+}
+
+h1 {
+text-align: center;
+margin: 10px;
+}
+
+select {
+display: block;
+margin: 0 auto 10px auto;
+padding: 5px;
+}
+
+#map {
+height: 85vh;
+width: 100%;
+}
