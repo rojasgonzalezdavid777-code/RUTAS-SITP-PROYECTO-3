@@ -20,7 +20,7 @@ if(value.includes(",")){
     map.flyTo([lat, lng], 13);
 }
 
-// Cargar rutas o paraderos SITP
+// Cargar rutas o paraderos SITP1
 if(value === "sitp"){
 
 fetch("paradero_zonal.geojson")
