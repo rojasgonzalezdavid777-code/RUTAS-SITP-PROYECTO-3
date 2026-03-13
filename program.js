@@ -1,51 +1,36 @@
-// Crear mapa
-let map = L.map("map").setView([4.63, -74.08], 11);
+const map = L.map("map").setView([4.63, -74.08], 11);
 
-// Capa base
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors"
 }).addTo(map);
 
-// Variable para guardar la capa
 let rutasLayer;
 
-// Evento del menú desplegable
-document.getElementById("select").addEventListener("change", function(){
+document.getElementById("select-location").addEventListener("change", function() {
+    const value = this.value;
 
-let value = this.value;
-
-// Ir a Suba
-if(value.includes(",")){
-    let [lat, lng] = value.split(",").map(Number);
-    map.flyTo([lat, lng], 13);
-}
-
-// Cargar rutas o paraderos SITP1
-if(value === "sitp"){
-
-fetch("paradero_zonal.geojson")
-.then(response => response.json())
-.then(data => {
-
-    /// borrar capa anterior
-    if(rutasLayer){
-        map.removeLayer(rutasLayer);
+    if (value.includes(",")) {
+        const coords = value.split(",").map(Number);
+        map.flyTo(coords, 13);
     }
 
-    // agregar geojson
-    rutasLayer = L.geoJSON(data,{
-        style:{
-            color:"blue",
-            weight:2
-        }
-    }).addTo(map);
+    if (value === "sitp") {
+        fetch("paradero_zonal.geojson")
+            .then(res => res.json())
+            .then(data => {
+                if (rutasLayer) {
+                    map.removeLayer(rutasLayer);
+                }
 
-    // ajustar mapa al tamaño de los datos
-    map.fitBounds(rutasLayer.getBounds());
+                rutasLayer = L.geoJSON(data, {
+                    style: {
+                        color: "blue",
+                        weight: 2
+                    }
+                }).addTo(map);
 
-})
-.catch(error => console.log("Error cargando GeoJSON:", error));
-
-}
-
+                map.fitBounds(rutasLayer.getBounds());
+            })
+            .catch(err => console.log(err));
+    }
 });
