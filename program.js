@@ -27,7 +27,7 @@ fetch("paradero_zonal.geojson")
 .then(response => response.json())
 .then(data => {
 
-    // borrar capa anterior
+    /// borrar capa anterior
     if(rutasLayer){
         map.removeLayer(rutasLayer);
     }
